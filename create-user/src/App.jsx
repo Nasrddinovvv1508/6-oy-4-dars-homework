@@ -7,9 +7,11 @@ import { useState } from "react";
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/footer'
 import UserList from './components/userList/UserList';
+import NewUserForm from './components/newUser/NewUserForm';
 
 function App() {
   let [users, setUsers] = useState([]);
+  let [showModal, setShowModal] = useState(false)
 
   // delete users
   let deleteUsers = (id) => {
@@ -20,8 +22,21 @@ function App() {
     })
   }
 
+  // close Modal 
+  let closeModal = (e) => {
+    if (e.target.className === `overlay` || e.key === `Escape`) setShowModal(false);
+  }
+
+  // Add users
+  let addUsers = (user) => {
+    setUsers((prev) => {
+      return [...prev, user];
+    })
+    setShowModal(false)
+  }
+
   return (
-    <div className='App'>
+    <div onClick={closeModal} onKeyDown={closeModal} className='App'>
       <Navbar usersLenght={users.length} />
       <main>
         <div className="no-users">
@@ -29,19 +44,11 @@ function App() {
         </div>
         <UserList users={users} deleteUsers={deleteUsers}/>
       </main>
-      <button className='create-user'>Create Users</button>
+      {showModal && <NewUserForm addUsers={addUsers}/>}
+      <button onClick={() => setShowModal(true)} className='create-user'>Create Users</button>
       <Footer />
     </div>
   )
 }
 
 export default App
-
-// id: 1,
-// image: `https://picsum.photos/400/400?random=1`,
-// firstName: `Najmiddin`,
-// lastName: `Nasriddinov`,
-// age: 16,
-// from: `Uzbekistan`,
-// job: `Frontend Developer`,
-// gender: `Male`,
