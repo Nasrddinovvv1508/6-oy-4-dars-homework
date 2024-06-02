@@ -1,8 +1,16 @@
 import "./Footer.css";
 
 function footer() {
+
   return (
-    <div>footer</div>
+    <div className="footer">
+        <div className="footer-container container">
+          <p>
+            All Right Reserved.
+            <a href="#">Насрддиноввв</a>
+          </p>
+        </div>
+    </div>
   )
 }
 
